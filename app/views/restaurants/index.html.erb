@@ -1,16 +1,17 @@
-<% if Restaurant.all.any? %>
-  <% Restaurant.all.each do |restaurant| %>
+<% if @restaurants.any? %>
+  <% @restaurants.each do |restaurant| %>
     <div style="background: #ddd; width: 450px; margin-top: 10px;">
-      <h2 style="left:10px;"><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
-      <!-- <div style="background: #eee; width: 98%; margin: 0 auto; float:left;"> -->
+      <h2><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
         <p>Description: <%= restaurant.description %></p>
-      <!-- </div> -->
-      <!-- <div style="background: #ccc; width: 49%; float:left;"> -->
+        <% restaurant.reviews.each do |review| %>
+          <p>
+            <%= review.thoughts %>
+          </p>
+        <% end %>
+
         <p><%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %></p>
-      <!-- </div> -->
-      <!-- <div style="background: #ccc; width: 49%; float:right;"> -->
         <p><%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete %></p>
-      <!-- </div> -->
+        <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %>
     </div>
   <% end %>
 <% else %>
